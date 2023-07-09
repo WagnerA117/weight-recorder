@@ -9,7 +9,8 @@ app.use(bodyParser.json());
 //NOTE:
 //The bodyParser is
 //middleware allowing  HTTP POST requests containing
-// URL-encoded form data. This type of data is commonly sent from HTML forms using the application/x-www-form-urlencoded
+// URL-encoded form data. This type of data is commonly sent from HTML
+// forms using the application/x-www-form-urlencoded
 
 app.use(bodyParser.urlencoded({extended: true}));
 
