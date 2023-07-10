@@ -30,5 +30,6 @@ const validateToken = (token: string) => {
 		});
 	});
 };
+``;
 
 export {hashPassword, compareHashes, signToken, validateToken};
