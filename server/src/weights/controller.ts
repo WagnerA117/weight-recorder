@@ -4,12 +4,16 @@ import * as weightsService from "./service";
 
 const router = express.Router();
 
-//user comes from the validate auth middleware, we add it to the req body when the middlewar runs successfully
+//user comes from the validate auth middleware, we add it to the req body when the middleware runs successfully
 
 //create a new weight entry
-router.post("/", async (req, res) => {
+router.post("/save_weight", async (req, res) => {
 	const {id: ownerId} = req.user;
+
+	console.log(req.user, "user in the weights controller");
 	const {weight} = req.body;
+
+	console.log(req.body);
 
 	if (!weight) {
 		res.status(400).send("Weight is required");
@@ -48,7 +52,7 @@ router.get("/", async (req, res) => {
 	try {
 		const weights = await weightsService.getWeights(ownerId);
 		return res.status(200).json(weights);
-	} catch (err) {
+	} catch (err: any) {
 		return res.status(500).json({message: err.message});
 	}
 });
@@ -66,7 +70,7 @@ router.patch("/:id", async (req, res) => {
 			weight
 		);
 		return res.status(200).json(updatedWeight);
-	} catch (err) {
+	} catch (err: any) {
 		return res.status(500).json({message: err.message});
 	}
 });
@@ -80,7 +84,7 @@ router.delete("/:id", async (req, res) => {
 	try {
 		await weightsService.deleteWeight(weightId, ownerId);
 		return res.status(200).json({message: "Weight removed successfully"});
-	} catch (err) {
+	} catch (err: any) {
 		return res.status(500).json({message: err.message});
 	}
 });
