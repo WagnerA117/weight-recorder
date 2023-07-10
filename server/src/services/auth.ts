@@ -1,12 +1,12 @@
-import {firestore} from "../services/firebase";
+import {firestore} from "./firebase";
 import {UserType} from "../types";
 import {compareHashes, hashPassword, signToken, validateToken} from "../lib";
 
 const usersCollection = firestore.collection("users");
 
-const signUp = async (userName: string, password: string) => {
+const signUp = async (username: string, password: string) => {
 	//Check if the user exists
-	const {docs} = await usersCollection.where("userName", "==", userName).get();
+	const {docs} = await usersCollection.where("username", "==", username).get();
 
 	if (docs.length > 0) {
 		throw new Error("User already exists");
@@ -15,29 +15,34 @@ const signUp = async (userName: string, password: string) => {
 	//Hash the password
 	const hashedPassword = await hashPassword(password);
 	const user = await usersCollection.add({
-		userName,
+		username,
 		password: hashedPassword,
 	});
 
-	const token = signToken(user.id, userName);
+	console.log(password, hashedPassword);
+
+	const token = signToken(user.id, username);
 
 	return token;
 };
 
-const login = async (userName: string, password: string) => {
-	const {docs} = await usersCollection.where("userName", "==", userName).get();
+const login = async (username: string, password: string) => {
+	const {docs} = await usersCollection.where("username", "==", username).get();
 
 	const user = docs[0];
 
+	console.log(user.data(), "user data in login");
+
 	const {password: hashedPassword} = user.data();
 
-	const validPassword = await compareHashes(password, user.data().password);
+	const validPassword = await compareHashes(password, hashedPassword as string);
 
 	if (!validPassword) {
 		throw new Error("Invalid Credentials");
 	}
 
-	const token = signToken(user.id, userName);
+	const token = signToken(user.id, username);
+	console.log(token, "token in auth service login");
 
 	return token;
 };

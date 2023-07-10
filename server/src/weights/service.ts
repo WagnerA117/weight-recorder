@@ -1,4 +1,3 @@
-import {async} from "@firebase/util";
 import {firestore} from "../services/firebase";
 import {WeightType} from "../types";
 
