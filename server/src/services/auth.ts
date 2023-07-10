@@ -28,22 +28,16 @@ const signUp = async (username: string, password: string) => {
 
 const login = async (username: string, password: string) => {
 	const {docs} = await usersCollection.where("username", "==", username).get();
-
 	const user = docs[0];
-
-	console.log(user.data(), "user data in login");
 
 	const {password: hashedPassword} = user.data();
 
 	const validPassword = await compareHashes(password, hashedPassword as string);
-
 	if (!validPassword) {
 		throw new Error("Invalid Credentials");
 	}
 
 	const token = signToken(user.id, username);
-	console.log(token, "token in auth service login");
-
 	return token;
 };
 

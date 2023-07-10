@@ -15,7 +15,7 @@ const compareHashes = async (password: string, hash: string) => {
 const signToken = (id: string, username: string) => {
 	console.log("this ran in the lib, the sign token");
 
-	return jwt.sign([id, username], config.API_KEY_JWT, {
+	return jwt.sign({id, username}, config.API_KEY_JWT, {
 		expiresIn: config.TOKEN_EXPIRES_IN,
 	});
 };

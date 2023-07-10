@@ -2,6 +2,7 @@ import admin from "firebase-admin";
 import config from "../../config";
 
 if (!admin.apps.length) {
+	console.log();
 	admin.initializeApp({
 		credential: admin.credential.cert({
 			projectId: config.FIREBASE_PROJECT_ID,
