@@ -1,3 +1,4 @@
+import React from "react";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Home from "./pages/HomePage";
 import Login from "./pages/LoginPage";
@@ -8,7 +9,7 @@ const Router = () => {
 		<BrowserRouter>
 			<Routes>
 				<Route path="/home" element={<Home />} />
-				<Route path="/login" element={<Login />} />
+				<Route path="/" element={<Login />} />
 				<Route path="/sign_up" element={<SignUp />} />
 			</Routes>
 		</BrowserRouter>
