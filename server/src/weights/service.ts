@@ -42,7 +42,7 @@ const getWeights = async (ownerId: string) => {
 		...doc.data(),
 		id: doc.id,
 	}));
-
+	console.log({weights});
 	return weights;
 };
 
