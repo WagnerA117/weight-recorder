@@ -81,39 +81,41 @@ export default function DisplayTable(props: DisplayTablePropTypes) {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{weightsData.map((weight) => (
-							<TableRow
-								key={weight.id}
-								sx={{"&:last-child td, &:last-child th": {border: 0}}}
-							>
-								<TableCell component="th" scope="row">
-									{weight.weight}
-								</TableCell>
-								<TableCell align="right">
-									{Date(weight?.createdAt).toString()}
-								</TableCell>
-								<TableCell align="right">
-									<Button
-										onClick={() => {
-											setWeightItem(weight);
-											setOpenUpdate(true);
-										}}
-									>
-										Update
-									</Button>
-									<Button
-										onClick={() => {
-											setWeightItem(weight);
+						{weightsData.map((weight) => {
+							return (
+								<TableRow
+									key={weight.id}
+									sx={{"&:last-child td, &:last-child th": {border: 0}}}
+								>
+									<TableCell component="th" scope="row">
+										{weight.weight}
+									</TableCell>
+									<TableCell align="right">
+										{Date(weight?.createdAt).toString()}
+									</TableCell>
+									<TableCell align="right">
+										<Button
+											onClick={() => {
+												setWeightItem(weight);
+												setOpenUpdate(true);
+											}}
+										>
+											Update
+										</Button>
+										<Button
+											onClick={() => {
+												setWeightItem(weight);
 
-											setConfirmCancelOpen(true);
-										}}
-									>
-										{" "}
-										Delete
-									</Button>
-								</TableCell>
-							</TableRow>
-						))}
+												setConfirmCancelOpen(true);
+											}}
+										>
+											{" "}
+											Delete
+										</Button>
+									</TableCell>
+								</TableRow>
+							);
+						})}
 					</TableBody>
 				</Table>
 			</TableContainer>

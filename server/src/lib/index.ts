@@ -13,8 +13,6 @@ const compareHashes = async (password: string, hash: string) => {
 };
 
 const signToken = (id: string, username: string) => {
-	console.log("this ran in the lib, the sign token");
-
 	return jwt.sign({id, username}, config.API_KEY_JWT, {
 		expiresIn: config.TOKEN_EXPIRES_IN,
 	});
@@ -22,7 +20,6 @@ const signToken = (id: string, username: string) => {
 
 const validateToken = (token: string) => {
 	return new Promise<UserType>((resolve, reject) => {
-		console.log("this ran in the lib, the validate token function");
 		jwt.verify(token, config.API_KEY_JWT, (err, decoded) => {
 			if (err) return reject(err);
 

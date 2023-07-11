@@ -10,7 +10,6 @@ const router = express.Router();
 router.post("/save_weight", async (req, res) => {
 	const {id: ownerId} = req.user;
 
-	console.log(req.user, "user in the weights controller");
 	const {weight} = req.body;
 
 	console.log(req.body);
