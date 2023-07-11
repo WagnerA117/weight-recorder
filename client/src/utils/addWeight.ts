@@ -14,8 +14,8 @@ const addWeight = async (
 				ownerId,
 			}
 		);
-		toast("🦄 Weight recorded successfully.", {
-			position: "top-right",
+		toast("🦄Sucess! New Entry Added!", {
+			position: "top-center",
 			autoClose: 5000,
 			type: "success",
 		});

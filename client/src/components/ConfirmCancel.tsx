@@ -7,12 +7,18 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import deleteWeight from "../utils/deleteWeight";
 import {WeightType} from "../types";
+import {Box} from "@mui/material";
 
 type ConfirmCancelPropsType = {
 	confirmCancelOpen: boolean;
 	onClose: () => void;
 	weightItem: WeightType;
 	setWeightsData: React.Dispatch<React.SetStateAction<WeightType[]>>;
+};
+
+const buttonStyle = {
+	padding: "2%",
+	margin: "2%",
 };
 
 const ConfirmCancel = (props: ConfirmCancelPropsType) => {
@@ -49,10 +55,19 @@ const ConfirmCancel = (props: ConfirmCancelPropsType) => {
 				</DialogContentText>
 			</DialogContent>
 			<DialogActions>
-				<Button onClick={handleClose} autoFocus>
-					Cancel
-				</Button>
-				<Button onClick={handleSubmit}>Yes!</Button>
+				<Box display={"flex"} padding={"4%"}>
+					<Button onClick={handleClose} autoFocus style={buttonStyle}>
+						Cancel
+					</Button>
+					<Button
+						onClick={handleSubmit}
+						style={buttonStyle}
+						variant="outlined"
+						color="error"
+					>
+						Yes!
+					</Button>
+				</Box>
 			</DialogActions>
 		</Dialog>
 	);

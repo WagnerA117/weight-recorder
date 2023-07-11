@@ -13,6 +13,11 @@ interface WeightDataResponse {
 	data: WeightType[];
 }
 
+const buttonStyle = {
+	padding: "2%",
+	margin: "2%",
+};
+
 const validateJwtToken = async () => {
 	try {
 		const token = localStorage.getItem("token");
@@ -41,6 +46,7 @@ const HomePage = () => {
 	const handleFetchWieghts = async () => {
 		setLoading(true);
 		const res: WeightDataResponse = await getAxios().get("/weights");
+
 		setWeightsData(res.data);
 	};
 
@@ -80,9 +86,12 @@ const HomePage = () => {
 			<h1>Welcome to Weights</h1>
 			<DisplayTable setWeightsData={setWeightsData} weightsData={weightsData} />
 			<Button
+				variant="outlined"
+				color="warning"
 				onClick={() => {
 					handleSignOut();
 				}}
+				style={buttonStyle}
 			>
 				Sign Out
 			</Button>
