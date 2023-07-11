@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import routes from "./src/routes";
+import cors from "cors";
 
 const app = express();
 
@@ -13,7 +14,7 @@ app.use(bodyParser.json());
 // forms using the application/x-www-form-urlencoded
 
 app.use(bodyParser.urlencoded({extended: true}));
-
+app.use(cors({credentials: true}));
 app.use((_, res, next) => {
 	// Website you wish to allow to connect
 	res.setHeader("Access-Control-Allow-Origin", "*");
