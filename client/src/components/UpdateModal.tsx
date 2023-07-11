@@ -30,11 +30,11 @@ type UpdateModalProps = {
 	onClose: () => void;
 	open: boolean;
 
-	weightItem?: WeightType | null;
+	weightItem?: WeightType | undefined;
 };
 export default function UpdateModal(props: UpdateModalProps) {
 	const {action, open, onClose, weightItem} = props;
-	const [updatedWeight, setUpdatedWeight] = React.useState(0 as number);
+	const [updatedWeight, setUpdatedWeight] = React.useState("");
 
 	console.log(weightItem?.id, "weight item in update modal");
 	console.log(weightItem?.ownerId, "weight ownerId in update modal");
@@ -43,7 +43,7 @@ export default function UpdateModal(props: UpdateModalProps) {
 		// Close the modal by calling the onClose prop
 		//Convert the newWeight to a number
 
-		setUpdatedWeight(0);
+		setUpdatedWeight("");
 		onClose();
 	};
 
@@ -54,7 +54,7 @@ export default function UpdateModal(props: UpdateModalProps) {
 			weightItem?.ownerId
 		);
 
-		setUpdatedWeight(0);
+		setUpdatedWeight("");
 		onClose();
 	};
 
