@@ -1,7 +1,11 @@
+import * as React from "react";
+
 import {useState} from "react";
 import {Box, Button, Typography} from "@mui/material";
 import TextField from "@mui/material/TextField";
 import {useNavigate} from "react-router-dom";
+import getAxios from "../api/getAxios";
+import axios from "axios";
 
 const inputStyle = {
 	backgroundColor: "lightblue",
@@ -14,6 +18,32 @@ const SignUp = () => {
 	const [username, setUserName] = useState("");
 	const [password, setPassword] = useState("");
 	const navigate = useNavigate();
+
+	const handleSignUp = async (
+		username: string,
+		password: string
+	): Promise<void> => {
+		try {
+			const {
+				data: {token},
+			}: {data: {token: string}} = await axios.post(
+				"http://localhost:9000/auth/sign_up",
+				{
+					username,
+					password,
+				}
+			);
+
+			localStorage.setItem("token", token);
+
+			console.log("this ran ");
+			// Handle the response data here
+			navigate("/home");
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	return (
 		<>
 			<Box
@@ -49,7 +79,13 @@ const SignUp = () => {
 					sx={inputStyle}
 				/>
 
-				<Button>Sign Up</Button>
+				<Button
+					onClick={async () => {
+						await handleSignUp(username, password);
+					}}
+				>
+					Sign Up
+				</Button>
 
 				<Typography
 					variant="h5"

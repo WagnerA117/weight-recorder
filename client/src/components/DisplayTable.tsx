@@ -16,7 +16,8 @@ import UpdateModal from "./UpdateModal";
 import ConfirmCancel from "./ConfirmCancel";
 
 type DisplayTablePropTypes = {
-	weightsData?: WeightType[];
+	weightsData: WeightType[];
+	setWeightsData: React.Dispatch<React.SetStateAction<WeightType[]>>;
 };
 
 export default function DisplayTable(props: DisplayTablePropTypes) {
@@ -27,30 +28,80 @@ export default function DisplayTable(props: DisplayTablePropTypes) {
 	const [openUpdate, setOpenUpdate] = useState(false);
 	const [confirmCancelOpen, setConfirmCancelOpen] = useState(false);
 
-	if (weightsData?.length === 0 || !weightsData) {
-		return (
-			<Box>
-				<h3>No weights</h3>
-				<FitnessCenterTwoToneIcon sx={{fontSize: 100}} />;
-			</Box>
-		);
-	}
+	console.log("weightsData", weightsData);
 
 	return (
 		<>
 			<Button onClick={() => setOpenAdd(true)}>Add Weight</Button>
-			<FitnessCenterTwoToneIcon sx={{fontSize: 30}} />
+			{weightsData.length === 0 ? (
+				<Box>
+					<h3>No weights</h3>
+					<FitnessCenterTwoToneIcon sx={{fontSize: 100}} />;
+				</Box>
+			) : (
+				<TableContainer component={Paper}>
+					<Table sx={{minWidth: 650}} aria-label="simple table">
+						<TableHead>
+							<TableRow>
+								<TableCell>Weight(Kg)</TableCell>
+								<TableCell align="center">Date Added</TableCell>
+							</TableRow>
+						</TableHead>
+						<TableBody>
+							{weightsData.map((weight) => {
+								return (
+									<TableRow
+										key={weight.id}
+										sx={{"&:last-child td, &:last-child th": {border: 0}}}
+									>
+										<TableCell component="th" scope="row">
+											{weight.weight}
+										</TableCell>
+										<TableCell align="right">
+											{new Date(weight?.createdAt || 0).toString()}
+										</TableCell>
+										<TableCell align="right">
+											<Button
+												onClick={() => {
+													setWeightItem(weight);
+													setOpenUpdate(true);
+												}}
+											>
+												Update
+											</Button>
+											<Button
+												onClick={() => {
+													setWeightItem(weight);
 
-			<ConfirmCancel
-				confirmCancelOpen={confirmCancelOpen}
-				onClose={() => {
-					setConfirmCancelOpen(false);
-					setWeightItem(null);
-				}}
-				weightItem={weightItem}
-			/>
+													setConfirmCancelOpen(true);
+												}}
+											>
+												{" "}
+												Delete
+											</Button>
+										</TableCell>
+									</TableRow>
+								);
+							})}
+						</TableBody>
+					</Table>
+				</TableContainer>
+			)}
+			<FitnessCenterTwoToneIcon sx={{fontSize: 30}} />
+			{weightItem && (
+				<ConfirmCancel
+					confirmCancelOpen={confirmCancelOpen}
+					onClose={() => {
+						setConfirmCancelOpen(false);
+						setWeightItem(null);
+					}}
+					weightItem={weightItem}
+					setWeightsData={props.setWeightsData}
+				/>
+			)}
 
 			<AddModal
+				setStateAction={props.setWeightsData}
 				open={openAdd}
 				action="Add"
 				onClose={() => {
@@ -58,12 +109,13 @@ export default function DisplayTable(props: DisplayTablePropTypes) {
 					setWeightItem(null);
 				}}
 				weightItem={weightItem}
-				ownerId={weightsData[0].ownerId}
+				ownerId={weightsData?.[0]?.ownerId || ""}
 			/>
 
 			{/* This modal handles updating an item */}
 			<UpdateModal
 				open={openUpdate}
+				setWeightsData={props.setWeightsData}
 				action="Update"
 				onClose={() => {
 					setOpenUpdate(false);
@@ -71,54 +123,6 @@ export default function DisplayTable(props: DisplayTablePropTypes) {
 				}}
 				weightItem={weightItem as WeightType}
 			/>
-
-			<TableContainer component={Paper}>
-				<Table sx={{minWidth: 650}} aria-label="simple table">
-					<TableHead>
-						<TableRow>
-							<TableCell>Weight</TableCell>
-							<TableCell align="center">Date Added</TableCell>
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						{weightsData.map((weight) => {
-							return (
-								<TableRow
-									key={weight.id}
-									sx={{"&:last-child td, &:last-child th": {border: 0}}}
-								>
-									<TableCell component="th" scope="row">
-										{weight.weight}
-									</TableCell>
-									<TableCell align="right">
-										{Date(weight?.createdAt).toString()}
-									</TableCell>
-									<TableCell align="right">
-										<Button
-											onClick={() => {
-												setWeightItem(weight);
-												setOpenUpdate(true);
-											}}
-										>
-											Update
-										</Button>
-										<Button
-											onClick={() => {
-												setWeightItem(weight);
-
-												setConfirmCancelOpen(true);
-											}}
-										>
-											{" "}
-											Delete
-										</Button>
-									</TableCell>
-								</TableRow>
-							);
-						})}
-					</TableBody>
-				</Table>
-			</TableContainer>
 		</>
 	);
 }

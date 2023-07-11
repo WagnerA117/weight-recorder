@@ -1,8 +1,13 @@
 import express from "express";
 
 import * as authService from "../services/auth";
+import validateAuth from "../middleware/validateAuth";
 
 const router = express.Router();
+
+router.get("/validate-token", validateAuth, async (req, res) => {
+	return res.status(200).json({validToken: true});
+});
 
 //NOTE: Route to sign up a new user, check if they don't exist already, and return a JWT token if all good
 router.post("/sign_up", async (req, res) => {
