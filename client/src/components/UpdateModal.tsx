@@ -49,9 +49,9 @@ export default function UpdateModal(props: UpdateModalProps) {
 
 	const handleSubmit = async () => {
 		await updateWeight(
-			weightItem?.id,
+			weightItem?.id as string,
 			Number(updatedWeight),
-			weightItem?.ownerId
+			weightItem?.ownerId as string
 		);
 
 		setUpdatedWeight("");

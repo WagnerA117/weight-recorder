@@ -69,7 +69,7 @@ export default function DisplayTable(props: DisplayTablePropTypes) {
 					setOpenUpdate(false);
 					setWeightItem(null);
 				}}
-				weightItem={weightItem}
+				weightItem={weightItem as WeightType}
 			/>
 
 			<TableContainer component={Paper}>
