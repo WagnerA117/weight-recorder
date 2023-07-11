@@ -1,3 +1,4 @@
+import * as React from "react";
 import {useEffect, useState} from "react";
 
 import getAxios from "../api/getAxios";
@@ -51,12 +52,10 @@ const HomePage = () => {
 	}
 
 	return (
-		<>
-			<Box>
-				<h1>Welcome to Weights</h1>
-				<DisplayTable weightsData={weightsData} />
-			</Box>
-		</>
+		<Box>
+			<h1>Welcome to Weights</h1>
+			<DisplayTable weightsData={weightsData} />
+		</Box>
 	);
 };
 
