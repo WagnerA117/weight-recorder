@@ -5,7 +5,7 @@ import getAxios from "../api/getAxios";
 
 import {useNavigate} from "react-router-dom";
 import DisplayTable from "../components/DisplayTable";
-import {Box} from "@mui/material";
+import {Box, Button} from "@mui/material";
 import ScaleIcon from "@mui/icons-material/Scale";
 
 const HomePage = () => {
@@ -13,7 +13,10 @@ const HomePage = () => {
 	const navigate = useNavigate();
 	const [loading, setLoading] = useState(true);
 
-	console.log(weightsData);
+	const handleSignOut = () => {
+		localStorage.removeItem("token");
+		navigate("/");
+	};
 
 	useEffect(() => {
 		const isLoggedIn = localStorage.getItem("token");
@@ -40,8 +43,6 @@ const HomePage = () => {
 		return () => clearTimeout(timeoutId);
 	}, []);
 
-	console.log(weightsData);
-
 	if (loading) {
 		return (
 			<Box>
@@ -55,6 +56,13 @@ const HomePage = () => {
 		<Box>
 			<h1>Welcome to Weights</h1>
 			<DisplayTable weightsData={weightsData} />
+			<Button
+				onClick={() => {
+					handleSignOut();
+				}}
+			>
+				Sign Out
+			</Button>
 		</Box>
 	);
 };

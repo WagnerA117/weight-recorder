@@ -12,8 +12,6 @@ const validateAuth = async (
 ) => {
 	//remove the bearer from the token
 
-	console.log("this ran in the validate auth middleware");
-
 	const token =
 		req.headers.authorization && req.headers.authorization.split(" ")[1];
 

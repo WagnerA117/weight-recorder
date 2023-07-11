@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Box, Button, Typography} from "@mui/material";
 import TextField from "@mui/material/TextField";
 import getAxios from "../api/getAxios";
@@ -13,7 +13,6 @@ const inputStyle = {
 const Login = () => {
 	const [username, setUserName] = useState("");
 	const [password, setPassword] = useState("");
-	const [weightsData, setWeightsData] = useState([]);
 	const navigate = useNavigate();
 
 	const handleLogin = async (
@@ -38,28 +37,8 @@ const Login = () => {
 		}
 	};
 
-	//useEffect(() => {
-	//	const isLoggedIn = localStorage.getItem("token");
-
-	//	if (isLoggedIn) {
-	//		navigate("/weights");
-	//		getAxios()
-	//			.get("/weights")
-	//			.then((res: {data: []}) => {
-	//				const {data} = res;
-	//				setWeightsData(data);
-	//			})
-	//			.catch((err) => {
-	//				console.log(err);
-	//			});
-	//	}
-	//}, []);
-
 	return (
 		<>
-			{weightsData.map((w: {weight: string}) => (
-				<p>{w.weight}</p>
-			))}
 			<Box
 				margin="auto"
 				sx={{

@@ -36,9 +36,6 @@ export default function UpdateModal(props: UpdateModalProps) {
 	const {action, open, onClose, weightItem} = props;
 	const [updatedWeight, setUpdatedWeight] = React.useState("");
 
-	console.log(weightItem?.id, "weight item in update modal");
-	console.log(weightItem?.ownerId, "weight ownerId in update modal");
-
 	const handleClose = () => {
 		// Close the modal by calling the onClose prop
 		//Convert the newWeight to a number
