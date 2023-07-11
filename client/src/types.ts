@@ -1,6 +1,6 @@
 export type WeightType = {
-	createdAt?: number | undefined;
-	weight?: string | undefined;
-	ownerId?: string | undefined;
-	id?: string | undefined;
+	createdAt: number;
+	weight: number;
+	ownerId: string;
+	id: string;
 };

@@ -28,6 +28,7 @@ type AddModalProps = {
 	open: boolean;
 	ownerId?: string;
 	weightItem?: WeightType | null;
+	setStateAction: React.Dispatch<React.SetStateAction<any[]>>;
 };
 export default function AddModal(props: AddModalProps) {
 	const {action, open, onClose, ownerId} = props;
@@ -45,53 +46,54 @@ export default function AddModal(props: AddModalProps) {
 
 	const handleSubmit = async () => {
 		setLoading(true);
-		await addWeight(Number(newWeight), ownerId || "");
-		setNewWeight(0);
-		onClose();
+		const weight = await addWeight(newWeight, ownerId || "");
+		if (weight) {
+			props.setStateAction((prevState: WeightType[]) => [...prevState, weight]);
+			setNewWeight(0);
+			onClose();
+		}
 		setLoading(false);
 	};
 
 	return (
-		<div>
-			<Modal
-				aria-labelledby="transition-modal-title"
-				aria-describedby="transition-modal-description"
-				color="black"
-				open={open}
-				onClose={handleClose}
-				closeAfterTransition
-				slots={{backdrop: Backdrop}}
-				slotProps={{
-					backdrop: {
-						timeout: 500,
-					},
-				}}
-			>
-				<Fade in={open}>
-					<Box sx={style}>
-						<Typography
-							id="transition-modal-title"
-							align="center"
-							variant="h6"
-							component="h2"
-						>
-							{action} Weight
-						</Typography>
-						<TextField
-							onChange={(e) => setNewWeight(e.target.value)}
-							value={newWeight}
-							id="outlined-basic"
-							label="Weight"
-							type="number"
-							variant="outlined"
-						>
-							{" "}
-						</TextField>
-						<Button onClick={handleSubmit}>Go!</Button>
-						<Button onClick={handleClose}>Close</Button>
-					</Box>
-				</Fade>
-			</Modal>
-		</div>
+		<Modal
+			aria-labelledby="transition-modal-title"
+			aria-describedby="transition-modal-description"
+			color="black"
+			open={open}
+			onClose={handleClose}
+			closeAfterTransition
+			slots={{backdrop: Backdrop}}
+			slotProps={{
+				backdrop: {
+					timeout: 500,
+				},
+			}}
+		>
+			<Fade in={open}>
+				<Box sx={style}>
+					<Typography
+						id="transition-modal-title"
+						align="center"
+						variant="h6"
+						component="h2"
+					>
+						{action} Weight
+					</Typography>
+					<TextField
+						onChange={(e) => setNewWeight(Number(e.target.value))}
+						value={newWeight}
+						id="outlined-basic"
+						label="Weight"
+						type="number"
+						variant="outlined"
+					>
+						{" "}
+					</TextField>
+					<Button onClick={handleSubmit}>Go!</Button>
+					<Button onClick={handleClose}>Close</Button>
+				</Box>
+			</Fade>
+		</Modal>
 	);
 }

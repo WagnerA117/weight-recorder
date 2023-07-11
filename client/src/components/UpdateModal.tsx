@@ -29,11 +29,11 @@ type UpdateModalProps = {
 	action: string;
 	onClose: () => void;
 	open: boolean;
-
+	setWeightsData: React.Dispatch<React.SetStateAction<any[]>>;
 	weightItem?: WeightType | undefined;
 };
 export default function UpdateModal(props: UpdateModalProps) {
-	const {action, open, onClose, weightItem} = props;
+	const {action, open, onClose, weightItem, setWeightsData} = props;
 	const [updatedWeight, setUpdatedWeight] = React.useState("");
 
 	const handleClose = () => {
@@ -50,6 +50,15 @@ export default function UpdateModal(props: UpdateModalProps) {
 			Number(updatedWeight),
 			weightItem?.ownerId as string
 		);
+
+		setWeightsData((prevState: WeightType[]) => {
+			const updatedState = [...prevState];
+			const updatedWeightIndex = updatedState.findIndex(
+				(weight) => weight.id === weightItem?.id
+			);
+			updatedState[updatedWeightIndex].weight = Number(updatedWeight);
+			return updatedState;
+		});
 
 		setUpdatedWeight("");
 		onClose();

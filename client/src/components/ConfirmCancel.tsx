@@ -11,11 +11,12 @@ import {WeightType} from "../types";
 type ConfirmCancelPropsType = {
 	confirmCancelOpen: boolean;
 	onClose: () => void;
-	weightItem: WeightType | null;
+	weightItem: WeightType;
+	setWeightsData: React.Dispatch<React.SetStateAction<WeightType[]>>;
 };
 
 const ConfirmCancel = (props: ConfirmCancelPropsType) => {
-	const {confirmCancelOpen, onClose, weightItem} = props;
+	const {confirmCancelOpen, onClose, weightItem, setWeightsData} = props;
 
 	const handleClose = () => {
 		// Close the modal by calling the onClose prop
@@ -24,34 +25,36 @@ const ConfirmCancel = (props: ConfirmCancelPropsType) => {
 	};
 
 	const handleSubmit = async () => {
-		await deleteWeight(weightItem!.id, weightItem!.ownerId);
+		if (!weightItem) return console.log("No weight item");
+
+		await deleteWeight(weightItem.id, weightItem.ownerId);
+		setWeightsData((prevState: WeightType[]) =>
+			prevState.filter((weight) => weight.id !== weightItem.id)
+		);
+
 		onClose();
 	};
 
 	return (
-		<div>
-			<Dialog
-				open={confirmCancelOpen}
-				onClose={() => handleClose}
-				aria-labelledby="alert-dialog-title"
-				aria-describedby="alert-dialog-description"
-			>
-				<DialogTitle id="alert-dialog-title">
-					{"Delete this weight?"}
-				</DialogTitle>
-				<DialogContent>
-					<DialogContentText id="alert-dialog-description">
-						Are you sure you want to remove this weight?
-					</DialogContentText>
-				</DialogContent>
-				<DialogActions>
-					<Button onClick={handleClose} autoFocus>
-						Cancel
-					</Button>
-					<Button onClick={handleSubmit}>Yes!</Button>
-				</DialogActions>
-			</Dialog>
-		</div>
+		<Dialog
+			open={confirmCancelOpen}
+			onClose={() => handleClose}
+			aria-labelledby="alert-dialog-title"
+			aria-describedby="alert-dialog-description"
+		>
+			<DialogTitle id="alert-dialog-title">{"Delete this weight?"}</DialogTitle>
+			<DialogContent>
+				<DialogContentText id="alert-dialog-description">
+					Are you sure you want to remove this weight?
+				</DialogContentText>
+			</DialogContent>
+			<DialogActions>
+				<Button onClick={handleClose} autoFocus>
+					Cancel
+				</Button>
+				<Button onClick={handleSubmit}>Yes!</Button>
+			</DialogActions>
+		</Dialog>
 	);
 };
 

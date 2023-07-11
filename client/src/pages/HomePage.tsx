@@ -7,40 +7,63 @@ import {useNavigate} from "react-router-dom";
 import DisplayTable from "../components/DisplayTable";
 import {Box, Button} from "@mui/material";
 import ScaleIcon from "@mui/icons-material/Scale";
+import {WeightType} from "../types";
+
+interface WeightDataResponse {
+	data: WeightType[];
+}
+
+const validateJwtToken = async () => {
+	try {
+		const token = localStorage.getItem("token");
+		if (token) {
+			const res: {data: {validToken: boolean}} = await getAxios().get(
+				"/auth/validate-token"
+			);
+			return res.data.validToken;
+		}
+		return false;
+	} catch (error) {
+		return false;
+	}
+};
 
 const HomePage = () => {
-	const [weightsData, setWeightsData] = useState([]);
+	const [weightsData, setWeightsData] = useState<WeightType[]>([]);
 	const navigate = useNavigate();
-	const [loading, setLoading] = useState(true);
-
+	const [loading, setLoading] = useState(false);
+	//NOTE: Add a confirm dialog to this action!
 	const handleSignOut = () => {
 		localStorage.removeItem("token");
 		navigate("/");
 	};
 
+	const handleFetchWieghts = async () => {
+		setLoading(true);
+		const res: WeightDataResponse = await getAxios().get("/weights");
+		setWeightsData(res.data);
+	};
+
 	useEffect(() => {
 		const isLoggedIn = localStorage.getItem("token");
-
-		if (isLoggedIn) {
-			navigate("/home");
-			getAxios()
-				.get("/weights")
-				.then((res: {data: []}) => {
-					console.log(res);
-					const {data} = res;
-
-					setWeightsData(data);
+		if (!isLoggedIn) {
+			navigate("/");
+		} else {
+			validateJwtToken()
+				.then(() => {
+					handleFetchWieghts()
+						.then(() => {
+							setLoading(false);
+						})
+						.catch((err) => {
+							console.log(err);
+							setLoading(false);
+						});
 				})
 				.catch((err) => {
 					console.log(err);
 				});
 		}
-
-		const timeoutId = setTimeout(() => {
-			setLoading(false);
-		}, 750); // Half a second delay (500 milliseconds)
-
-		return () => clearTimeout(timeoutId);
 	}, []);
 
 	if (loading) {
@@ -55,7 +78,7 @@ const HomePage = () => {
 	return (
 		<Box>
 			<h1>Welcome to Weights</h1>
-			<DisplayTable weightsData={weightsData} />
+			<DisplayTable setWeightsData={setWeightsData} weightsData={weightsData} />
 			<Button
 				onClick={() => {
 					handleSignOut();
