@@ -1,4 +1,5 @@
 import getAxios from "../api/getAxios";
+import {toast} from "react-toastify";
 
 const updateWeight = async (
 	weightId: string,
@@ -16,6 +17,12 @@ const updateWeight = async (
 				ownerId,
 			}
 		);
+
+		toast("Sucess! Weight Updated ", {
+			position: "top-center",
+			autoClose: 5000,
+			type: "success",
+		});
 	} catch (error) {
 		console.log(error);
 	}

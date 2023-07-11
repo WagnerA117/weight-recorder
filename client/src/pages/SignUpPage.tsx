@@ -4,14 +4,21 @@ import {useState} from "react";
 import {Box, Button, Typography} from "@mui/material";
 import TextField from "@mui/material/TextField";
 import {useNavigate} from "react-router-dom";
-import getAxios from "../api/getAxios";
+
 import axios from "axios";
 
 const inputStyle = {
-	backgroundColor: "lightblue",
-	margin: "2em",
-
+	backgroundColor: "lightgreen",
+	margin: 4,
 	width: "30%",
+};
+
+const buttonStyle = {
+	backgroundColor: "lightgreen",
+
+	padding: "1%",
+	margin: "1%",
+	width: "8%",
 };
 
 const SignUp = () => {
@@ -36,7 +43,6 @@ const SignUp = () => {
 
 			localStorage.setItem("token", token);
 
-			console.log("this ran ");
 			// Handle the response data here
 			navigate("/home");
 		} catch (error) {
@@ -51,7 +57,7 @@ const SignUp = () => {
 				sx={{
 					display: "flex",
 					flexDirection: "column",
-					backgroundColor: "lightblue",
+
 					p: 1,
 					m: 1,
 					borderRadius: 1,
@@ -59,8 +65,8 @@ const SignUp = () => {
 					alignItems: "center",
 				}}
 			>
-				<Typography variant="h3" textAlign="center" color={"black"}>
-					Sign Up
+				<Typography variant="h1" textAlign="center" color={"lightgreen"}>
+					| sign up |
 				</Typography>
 				<TextField
 					id="outlined-basic"
@@ -80,6 +86,7 @@ const SignUp = () => {
 				/>
 
 				<Button
+					sx={buttonStyle}
 					onClick={async () => {
 						await handleSignUp(username, password);
 					}}
@@ -87,14 +94,10 @@ const SignUp = () => {
 					Sign Up
 				</Button>
 
-				<Typography
-					variant="h5"
-					color={"black"}
-					textAlign="center"
-					onClick={() => navigate("/login")}
-				>
-					Already have an account? Login
+				<Typography color="lightblue" textAlign="center">
+					Already have an account?
 				</Typography>
+				<Button onClick={() => navigate("/")}> Go To Login</Button>
 			</Box>
 		</>
 	);

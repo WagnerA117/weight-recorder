@@ -14,6 +14,7 @@ import {Box, Button} from "@mui/material";
 import AddModal from "./AddModal";
 import UpdateModal from "./UpdateModal";
 import ConfirmCancel from "./ConfirmCancel";
+import AddIcon from "@mui/icons-material/Add";
 
 type DisplayTablePropTypes = {
 	weightsData: WeightType[];
@@ -23,16 +24,29 @@ type DisplayTablePropTypes = {
 export default function DisplayTable(props: DisplayTablePropTypes) {
 	const {weightsData} = props;
 
+	weightsData.sort((a, b) => b.createdAt - a.createdAt);
+
 	const [weightItem, setWeightItem] = useState<WeightType | null>(null);
 	const [openAdd, setOpenAdd] = useState(false);
 	const [openUpdate, setOpenUpdate] = useState(false);
 	const [confirmCancelOpen, setConfirmCancelOpen] = useState(false);
 
-	console.log("weightsData", weightsData);
+	const buttonStyle = {
+		padding: "2%",
+		margin: "2%",
+	};
 
 	return (
 		<>
-			<Button onClick={() => setOpenAdd(true)}>Add Weight</Button>
+			<Button
+				variant="outlined"
+				color="success"
+				onClick={() => setOpenAdd(true)}
+				endIcon={<AddIcon />}
+				style={buttonStyle}
+			>
+				Add Weight
+			</Button>
 			{weightsData.length === 0 ? (
 				<Box>
 					<h3>No weights</h3>
@@ -62,6 +76,8 @@ export default function DisplayTable(props: DisplayTablePropTypes) {
 										</TableCell>
 										<TableCell align="right">
 											<Button
+												variant="outlined"
+												color="info"
 												onClick={() => {
 													setWeightItem(weight);
 													setOpenUpdate(true);
@@ -70,6 +86,7 @@ export default function DisplayTable(props: DisplayTablePropTypes) {
 												Update
 											</Button>
 											<Button
+												color="error"
 												onClick={() => {
 													setWeightItem(weight);
 
@@ -87,7 +104,7 @@ export default function DisplayTable(props: DisplayTablePropTypes) {
 					</Table>
 				</TableContainer>
 			)}
-			<FitnessCenterTwoToneIcon sx={{fontSize: 30}} />
+
 			{weightItem && (
 				<ConfirmCancel
 					confirmCancelOpen={confirmCancelOpen}

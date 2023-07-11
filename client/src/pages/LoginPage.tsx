@@ -10,6 +10,13 @@ const inputStyle = {
 	width: "30%",
 };
 
+const buttonStyle = {
+	backgroundColor: "lightblue",
+	padding: "1%",
+	margin: "1%",
+	width: "8%",
+};
+
 const Login = () => {
 	const [username, setUserName] = useState("");
 	const [password, setPassword] = useState("");
@@ -52,7 +59,7 @@ const Login = () => {
 				}}
 			>
 				<Typography variant="h1" color={"lightblue"} textAlign="center">
-					login{" "}
+					| login |
 				</Typography>
 				<TextField
 					onChange={(e) => setUserName(e.target.value)}
@@ -71,21 +78,19 @@ const Login = () => {
 					sx={inputStyle}
 				/>
 
-				<Button color="primary" onClick={() => handleLogin(username, password)}>
+				<Button
+					style={buttonStyle}
+					onClick={() => handleLogin(username, password)}
+				>
 					{" "}
-					<Typography variant="h5" color={"lightblue"} textAlign="center">
-						GO
-					</Typography>
+					login
 				</Button>
 
-				<Typography
-					variant="body2"
-					color={"lightblue"}
-					textAlign="center"
-					onClick={() => navigate("/sign_up")}
-				>
-					Don't have an account? Sign Up
+				<Typography color="lightgreen">
+					No account? Click below to sign up!
 				</Typography>
+
+				<Button onClick={() => navigate("/sign_up")}> Go To Sign Up</Button>
 			</Box>
 		</>
 	);
