@@ -30,12 +30,12 @@ To Run this project!
 <h5>for the env, you'll need </h5>
 
 <ul>
-<li>PORT=</li>
-<li>API_KEY_JWT=</li>
+<li>PORT= "your server port here</li>
+<li>API_KEY_JWT= "jwt api key"</li>
 
-<li>TOKEN_EXPIRES_IN=</li>
-<li>SALT_ROUNDS=</li>
-<li>FIREBASE_PROJECT_ID=</li>
+<li>TOKEN_EXPIRES_IN=7d </li>
+<li>SALT_ROUNDS=' some number, I use 10"</li>
+<li>FIREBASE_PROJECT_ID= </li>
 <li>FIREBASE_PRIVATE_KEY=</li>
 <li>FIREBASE_DATABASE_URL=</li>
 <li>FIREBASE_CLIENT_EMAIL=</li>
