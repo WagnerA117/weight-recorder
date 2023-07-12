@@ -14,6 +14,15 @@ const addWeight = async (
 				ownerId,
 			}
 		);
+
+		if (weight > 9000) {
+			toast("🦄 It's over OVER 9000!!!!", {
+				position: "top-right",
+				autoClose: 5000,
+				type: "error",
+			});
+		}
+
 		toast("🦄Sucess! New Entry Added!", {
 			position: "top-center",
 			autoClose: 5000,

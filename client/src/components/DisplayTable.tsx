@@ -36,6 +36,8 @@ export default function DisplayTable(props: DisplayTablePropTypes) {
 		margin: "2%",
 	};
 
+	//Note: Create modular modal box for modular moding!
+
 	return (
 		<>
 			<Button
