@@ -41,5 +41,3 @@ To Run this project!
 <li>FIREBASE_CLIENT_EMAIL=</li>
 
 </ul>
-
-
