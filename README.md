@@ -25,9 +25,25 @@ To Run this project!
        <> to start client: npm run dev:client</li>
 </ul>
 
-<p> Serve will run on  http://localhost:5173/ </p>
+<p> Client will run on  http://localhost:5173/ </p>
+
+<h5>for the env, you'll need </h5>
+
+<ul>
+<li>PORT=</li>
+<li>API_KEY_JWT=</li>
+
+<li>TOKEN_EXPIRES_IN=</li>
+<li>SALT_ROUNDS=</li>
+<li>FIREBASE_PROJECT_ID=</li>
+<li>FIREBASE_PRIVATE_KEY=</li>
+<li>FIREBASE_DATABASE_URL=</li>
+<li>FIREBASE_CLIENT_EMAIL=</li>
+
+</ul>
 
 <p>
+
 PORT=
 
 API_KEY_JWT=
