@@ -70,7 +70,7 @@ const SignUp = () => {
 				</Typography>
 				<TextField
 					id="outlined-basic"
-					label="User name"
+					label="User Name"
 					variant="outlined"
 					value={username}
 					onChange={(e) => setUserName(e.target.value)}
@@ -78,7 +78,7 @@ const SignUp = () => {
 				/>
 				<TextField
 					id="outlined-basic"
-					label="password"
+					label="Password"
 					variant="outlined"
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}
